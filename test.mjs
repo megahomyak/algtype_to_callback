@@ -39,17 +39,17 @@ console.log("-----");
         let result = cmd({
             add: (a, b) => {
                 if (a == 666) {
-                    return variants => variants.denied.devilNotAllowed();
+                    return results => results.denied.devilNotAllowed();
                 }
-                return variants => variants.success(a + b);
+                return results => results.success(a + b);
             },
             square: v => {
-                return variants => variants.success(v * v);
+                return results => results.success(v * v);
             },
         });
         return result;
     };
-    for (let input of [variants => variants.add(1, 2), variants => variants.add(666, 123), variants => variants.square(5)]) {
+    for (let input of [commands => commands.add(1, 2), commands => commands.add(666, 123), commands => commands.square(5)]) {
         console.log(compute(input)({
             denied: {
                 devilNotAllowed: () => "DNA",
