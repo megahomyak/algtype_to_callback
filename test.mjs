@@ -31,17 +31,20 @@
 console.log("-----");
 
 { // Callbacks
-    let compute = cmd => cmd({
-        add: (a, b) => {
-            if (a == 666) {
-                return ctx => ctx.denied.devilNotAllowed();
-            }
-            return ctx => ctx.success(a + b);
-        },
-        square: v => {
-            return ctx => ctx.success(v * v);
-        },
-    });
+    let compute = cmd => {
+        let result = cmd({
+            add: (a, b) => {
+                if (a == 666) {
+                    return ctx => ctx.denied.devilNotAllowed();
+                }
+                return ctx => ctx.success(a + b);
+            },
+            square: v => {
+                return ctx => ctx.success(v * v);
+            },
+        });
+        return result;
+    };
     for (let input of [ctx => ctx.add(1, 2), ctx => ctx.add(666, 123), ctx => ctx.square(5)]) {
         console.log(compute(input)({
             denied: {
