@@ -26,7 +26,7 @@
 }
 
 // Instead of returning {a:{b: data}}, return callbacks.a.b(data). For {a:b()}, just do b(callbacks.a)
-// Core idea: instead of returning a selected ({a: data}), return a selector (ctx => ctx.a(data)); instead of matching a selected (let a = b(); if (a.b) { let b = a.b; ... }), do all *specific* processing within a callback (b({ a: b => ... }))
+// Core idea: instead of returning a selected ({a: data}), return a selector (variants => variants.a(data)); instead of matching a selected (let a = b(); if (a.b) { let b = a.b; ... }), do all *specific* processing within a callback (b({ a: b => ... }))
 
 console.log("-----");
 
@@ -35,17 +35,17 @@ console.log("-----");
         let result = cmd({
             add: (a, b) => {
                 if (a == 666) {
-                    return ctx => ctx.denied.devilNotAllowed();
+                    return variants => variants.denied.devilNotAllowed();
                 }
-                return ctx => ctx.success(a + b);
+                return variants => variants.success(a + b);
             },
             square: v => {
-                return ctx => ctx.success(v * v);
+                return variants => variants.success(v * v);
             },
         });
         return result;
     };
-    for (let input of [ctx => ctx.add(1, 2), ctx => ctx.add(666, 123), ctx => ctx.square(5)]) {
+    for (let input of [variants => variants.add(1, 2), variants => variants.add(666, 123), variants => variants.square(5)]) {
         console.log(compute(input)({
             denied: {
                 devilNotAllowed: () => "DNA",
