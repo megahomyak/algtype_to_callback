@@ -28,7 +28,7 @@
 // Instead of returning {a:{b: data}}, return callbacks.a.b(data). For {a:b()}, just do b(callbacks.a)
 // Core idea: instead of returning a selected ({a: data}), return a selector (variants => variants.a(data)); instead of matching a selected (let a = b(); if (a.b) { let b = a.b; ... }), do all *specific* processing within a callback (b({ a: b => ... }))
 //
-// Analogy with the Rust programming language:
+// Analogy with the Rust programming language (// Rust // JS):
 // let a = match b { B::C(c) => ..., B::D(d) => ... }; // let a = b({C: (c) => ..., D: (d) => ...});
 // let a = A::B(b.await); // let a = (b => a => a.B(b))(await b);
 
