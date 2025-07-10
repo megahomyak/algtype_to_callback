@@ -14,3 +14,26 @@ for (let commandMatcher of commandMatchers) {
         sum: (a, b) => a + b,
     }));
 }
+
+// Slightly more complex, but cleaner at usage:
+
+// Definitions
+type Command = {
+    match: <Output>(cases: {
+        square: (value: number) => Output;
+        sum: (a: number, b: number) => Output;
+    }) => Output;
+};
+let Commands = {
+    square: (value: number): Command => ({ match: cases => cases.square(value) }),
+    sum: (a: number, b: number): Command => ({ match: cases => cases.sum(a, b) }),
+};
+
+// Usage
+let commands: Array<Command> = [Commands.square(5), Commands.sum(1, 2)];
+for (let command of commands) {
+    console.log(command.match({
+        square: v => v * v,
+        sum: (a, b) => a + b,
+    }));
+}
