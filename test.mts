@@ -2,14 +2,14 @@
 
 // Since input enums and output enums are the same enums just used in different places, I'll just do one plain enum
 
-type CommandMatcher = <Output>(command: {
+type CommandSelector = <Output>(cases: {
     square: (value: number) => Output;
     sum: (a: number, b: number) => Output;
 }) => Output;
 
-let commandMatchers: Array<CommandMatcher> = [command => command.square(5), command => command.sum(1, 2)];
-for (let commandMatcher of commandMatchers) {
-    console.log(commandMatcher({
+let commandSelectors: Array<CommandSelector> = [c => c.square(5), c => c.sum(1, 2)];
+for (let commandSelector of commandSelectors) {
+    console.log(commandSelector({
         square: v => v * v,
         sum: (a, b) => a + b,
     }));
